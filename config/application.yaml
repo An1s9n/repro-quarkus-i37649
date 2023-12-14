@@ -1,0 +1,6 @@
+datasource:
+  schema: "foo"
+
+#quarkus:
+#  liquibase:
+#    default-schema-name: foo

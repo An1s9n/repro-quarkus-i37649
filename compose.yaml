@@ -1,0 +1,31 @@
+services:
+  repro_quarkus_i37649_pg:
+    image: "postgres:16.1"
+    container_name: "repro-quarkus-i37649-pg"
+    environment:
+      POSTGRES_PASSWORD: "some-pass"
+      POSTGRES_USER: "some-user"
+      POSTGRES_DB: "some-db"
+    volumes:
+      - "./sql:/docker-entrypoint-initdb.d"
+    ports:
+      - "5432:5432"
+
+  repro_quarkus_i37649_service:
+    image: "an1s9n/repro-quarkus-i37649:1.0.0-SNAPSHOT"
+    container_name: "repro-quarkus-i37649-service"
+    depends_on:
+      - "repro_quarkus_i37649_pg"
+    restart: "on-failure"
+    volumes:
+      - "./config:/work/config"
+    ports:
+      - "8080:8080"
+    deploy:
+      resources:
+        reservations:
+          cpus: "0.05"
+          memory: "16m"
+        limits:
+          cpus: "0.5"
+          memory: "32m"

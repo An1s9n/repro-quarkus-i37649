@@ -1,0 +1,17 @@
+greeting:
+  message: "hello"
+
+datasource:
+  host: "host.docker.internal"
+  port: 5432
+  schema: "public"
+
+quarkus:
+  datasource:
+    username: "some-user"
+    password: "some-pass"
+    jdbc:
+      url: "jdbc:postgresql://${datasource.host}:${datasource.port}/some-db?currentSchema=${datasource.schema}"
+  liquibase:
+    default-schema-name: "${datasource.schema}"
+    migrate-at-start: true
